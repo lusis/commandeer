@@ -30,7 +30,8 @@ module Commandeer
     end
   end
 
-  def self.parse!(args)
+  def self.parse!(args, script_name=__FILE__)
+    @script_name = script_name
     # We haz no commands registered
     if @commands.size == 0
       puts "No known commands!"
@@ -39,7 +40,7 @@ module Commandeer
 
     # No args. Let's show what we have registered
     if (args.size == 0) || (args[0] =~ /^-/)
-      puts "Usage: #{__FILE__} [command options] or [command subcommand options]\n\n"
+      puts "Usage: #{@script_name} [command options] or [command subcommand options]\n\n"
       puts "Registered commands\n"
       @commands.each do |command, options|
         next if (command==:klass || command==:parser)
@@ -73,11 +74,11 @@ module Commandeer
     if command.has_key?(:parser)
       output = ''
       output << "\n`#{scope}` also takes options"
-      output << "\ntry running '#{__FILE__} #{scope} --help'"
+      output << "\ntry running '#{@script_name} #{scope} --help'"
       puts output
     end if args.size == 0
 
-    if args.size > 0
+    if args.size > 0 
       if subcommands.has_key?(args[0])
         # Okay so the next arg is a registered subcommand. Let's shift args
         new_scope = args.shift
