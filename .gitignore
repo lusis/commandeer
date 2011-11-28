@@ -1,3 +1,4 @@
 test.rb
 Gemfile.lock
 .rvmrc
+*.gem
