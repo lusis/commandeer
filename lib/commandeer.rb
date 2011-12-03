@@ -40,18 +40,19 @@ module Commandeer
 
     # No args. Let's show what we have registered
     if (args.size == 0) || (args[0] =~ /^-/)
-      puts "Usage: #{@script_name} [command options] or [command subcommand options]\n\n"
-      puts "Registered commands\n"
+      output = ''
+      output << "Usage: #{@script_name} [command options] or [command subcommand options]\n\n"
       @commands.each do |command, options|
         next if (command==:klass || command==:parser)
-        puts " #{command}"
+        output << "\t#{command}\t"
         unless options["subcommands"].nil?
-          puts "  subcommands:"
+          output << "Subcommands:"
           options["subcommands"].each do |sub, opts|
-            puts "   #{sub}"
+            output << " #{sub}"
           end
         end
       end
+      puts output
       exit
     end
 
@@ -79,6 +80,7 @@ module Commandeer
     end if args.size == 0
 
     if args.size > 0 
+      # This currently blows up on 'command --help'
       if subcommands.has_key?(args[0])
         # Okay so the next arg is a registered subcommand. Let's shift args
         new_scope = args.shift
