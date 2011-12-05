@@ -52,12 +52,9 @@ The only "requirement" is that the parser for the class be a class method.
 
 By default, Commandeer will look for a class method called `parse` but most everything is overrideable:
 
-- method name
-You can call a method other than parse
-- class
-You can call another class' parse method
-- parent
-You can set the command to be a subcommand by giving it a parent. The parent can, but doesn't have to be, a real command.
+- method name: _You can call a method other than parse_
+- class: _You can call another class' parse method_
+- parent: _You can set the command to be a subcommand by giving it a parent. The parent can, but doesn't have to be, a real command._
 
 ### Complex example
 
