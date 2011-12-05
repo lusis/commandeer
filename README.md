@@ -111,7 +111,7 @@ I really wanted to call this "cylon" so you could do this:
 
 ```ruby
 class Foo
-  include Cylong
+  include Cylon
 
   by_your_command "kill_humans"
 end
