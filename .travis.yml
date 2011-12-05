@@ -6,3 +6,4 @@ rvm:
   - jruby
 env:
   - ISOLATED=true
+script: "bundle exec rake test"
