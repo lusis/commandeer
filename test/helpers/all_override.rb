@@ -1,6 +1,6 @@
 class Foo
   def self.zing(args)
-    puts args
+    puts *args
   end
 end
 

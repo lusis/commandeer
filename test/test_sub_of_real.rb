@@ -64,7 +64,7 @@ class TestSubOfRealCommand < MiniTest::Unit::TestCase
     assert_match(out, /^parent \[options\]*$/)
   end
 
-  def test_output_child
+  def test_output_child_with_warning
     out, err = capture_io do
       begin
         Commandeer.parse! %w{parent child}
