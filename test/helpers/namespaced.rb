@@ -6,6 +6,7 @@ module Name
 
     def self.parse(args)
       puts args
+      exit
     end
   end
 end

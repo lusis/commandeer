@@ -65,30 +65,32 @@ module Commandeer
 
     subcommands = command["subcommands"]
 
-    if subcommands
+    if subcommands && args.size == 0
       output = ''
       output << "`#{scope}` has the following registered subcommands:\n"
       subcommands.keys.each {|x| output << "\t#{x}" }
       puts output
-    end if args.size == 0
+    end
 
-    if command.has_key?(:parser)
-      output = ''
-      output << "\n`#{scope}` also takes options"
-      output << "\ntry running '#{@script_name} #{scope} --help'"
-      puts output
-    end if args.size == 0
+    if command.has_key?(:parser) && args.size == 0
+      # We should just pass this straight to the parser and be done
+      #output = ''
+      #output << "\n`#{scope}` also takes options"
+      #output << "\ntry running '#{@script_name} #{scope} --help'"
+      #puts output
+      parser = command[:parser]
+      klass = command[:klass]
+    end
 
     if args.size > 0 
-      # This currently blows up on 'command --help'
-      if subcommands.has_key?(args[0])
+      if subcommands && subcommands.has_key?(args[0])
         # Okay so the next arg is a registered subcommand. Let's shift args
         new_scope = args.shift
         warning =<<-EOF
         Warning! `#{new_scope}` is a registered subcommand for `#{scope}` but `#{scope}` also takes options.
         This can cause unexpected results if `#{scope}` has an option named `#{new_scope}`
         EOF
-        puts warning
+        puts warning if command.has_key?(:parser)
 
         parser = subcommands[new_scope][:parser]
         klass = subcommands[new_scope][:klass]

@@ -1,11 +1,8 @@
+require "#{File.expand_path(File.join(File.dirname(__FILE__), "helper.rb"))}"
+
 class TestMethods < MiniTest::Unit::TestCase
   def setup
-    Commandeer.reset!
     @commands = Commandeer.commands
-  end
-
-  def teardown
-    Commandeer.reset!
   end
 
   def test_commands_is_hash
@@ -25,7 +22,7 @@ class TestMethods < MiniTest::Unit::TestCase
   end
 
   def test_respond_to_constantize
-    assert_respond_to(Commandeer, :parse!)
+    assert_respond_to(Commandeer, :constantize)
   end
 
 end

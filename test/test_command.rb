@@ -1,4 +1,6 @@
-class TestMethods < MiniTest::Unit::TestCase
+require "#{File.expand_path(File.join(File.dirname(__FILE__), "helper.rb"))}"
+
+class TestCommand < MiniTest::Unit::TestCase
   def setup
     require 'helpers/command.rb'
     @commands = Commandeer.commands
@@ -30,11 +32,11 @@ class TestMethods < MiniTest::Unit::TestCase
   def test_output_foo
     out, err = capture_io do
       begin
-        Commandeer.parse! %w{foo}
+        Commandeer.parse! %w{foo --help}
       rescue SystemExit
       end
     end
 
-    assert_match(out, /^`foo` also takes options.*$/)
+    assert_match(out, /^foo \[options\]*$/)
   end
 end
