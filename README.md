@@ -37,6 +37,7 @@ Commandeer.parse!(ARGV, __FILE__)
 ```
 
 Without any options:
+
 ```
 Usage: ./test-app.rb [command options] or [command subcommand options]
 
@@ -59,6 +60,7 @@ You can call another class' parse method
 You can set the command to be a subcommand by giving it a parent. The parent can, but doesn't have to be, a real command.
 
 ### Complex example
+
 ```ruby
 # override-all-the-things
 class Override
@@ -78,6 +80,7 @@ Commandeer.parse!(ARGV)
 ```
 
 Output:
+
 ```
 $ test-app.rb
 Usage: ./test-app.rb [command options] or [command subcommand options]
