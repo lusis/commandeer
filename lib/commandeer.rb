@@ -51,6 +51,7 @@ module Commandeer
             output << " #{sub}"
           end
         end
+        output << "\n"
       end
       puts output
       exit
