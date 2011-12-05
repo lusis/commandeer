@@ -14,4 +14,6 @@ Gem::Specification.new do |gem|
   gem.name          = "commandeer"
   gem.require_paths = ["lib"]
   gem.version       = Commandeer::VERSION
+  gem.add_development_dependency "rake", "~> 0.9.2.2"
+  gem.add_development_dependency "minitest", "~> 2.8.1"
 end
