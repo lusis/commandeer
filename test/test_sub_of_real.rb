@@ -4,7 +4,6 @@ class TestSubOfRealCommand < MiniTest::Unit::TestCase
   def setup
     require 'helpers/sub_of_real_command.rb'
     @commands = Commandeer.commands
-    puts @commands
   end
 
   def test_has_command
@@ -42,26 +41,46 @@ class TestSubOfRealCommand < MiniTest::Unit::TestCase
       rescue SystemExit
       end
     end
-    assert_match(out, /^.*Usage.*\n\n\t.*fakeparent\tSubcommands: bar.*$/)
+    assert_match(out, /^.*Usage.*\n\n\t.*parent\tSubcommands: child.*$/)
   end
 
-  def test_output_fakeparent
+  def test_output_parent
     out, err = capture_io do
       begin
-        Commandeer.parse! %w{fakeparent}
+        Commandeer.parse! %w{parent}
       rescue SystemExit
       end
     end
-    assert_match(out, /`fakeparent` has the following registered subcommands:\n\tbar.*$/)
+    assert_match(out, /`parent` has the following registered subcommands:\n\tchild.*$/)
   end
 
-  def test_output_bar_options
+  def test_output_parent_options
     out, err = capture_io do
       begin
-        Commandeer.parse! %w{fakeparent bar --help}
+        Commandeer.parse! %w{parent --help}
       rescue SystemExit
       end
     end
-    assert_match(out, /^bar \[options\]*$/)
+    assert_match(out, /^parent \[options\]*$/)
+  end
+
+  def test_output_child
+    out, err = capture_io do
+      begin
+        Commandeer.parse! %w{parent child}
+      rescue SystemExit
+      end
+    end
+    assert_match(out, /^.*Warning! `child` is a registered subcommand for `parent` but `parent` also takes options.*$/)
+  end
+
+  def test_output_child_options
+    out, err = capture_io do
+      begin
+        Commandeer.parse! %w{parent child --help}
+      rescue SystemExit
+      end
+    end
+    assert_match(out, /^.*\nchild \[options\]*$/)
   end
 end

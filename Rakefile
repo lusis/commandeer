@@ -2,8 +2,10 @@
 require "bundler/gem_tasks"
 require "rake/testtask"
 
-Rake::TestTask.new do |t|
-  t.libs << "test"
-  t.test_files = FileList['test/test_*.rb']
-  t.verbose = true
+
+task :test do
+  tests = Dir.glob('test/test_*.rb')
+  tests.each do |test|
+    sh %{/usr/bin/env ruby #{test}}
+  end
 end

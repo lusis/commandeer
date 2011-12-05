@@ -4,3 +4,4 @@ gem 'minitest'
 require 'minitest/pride'
 require 'minitest/autorun'
 require 'commandeer'
+Commandeer.reset!
