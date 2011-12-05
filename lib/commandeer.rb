@@ -74,10 +74,6 @@ module Commandeer
 
     if command.has_key?(:parser) && args.size == 0
       # We should just pass this straight to the parser and be done
-      #output = ''
-      #output << "\n`#{scope}` also takes options"
-      #output << "\ntry running '#{@script_name} #{scope} --help'"
-      #puts output
       parser = command[:parser]
       klass = command[:klass]
     end
