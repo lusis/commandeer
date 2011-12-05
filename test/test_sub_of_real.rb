@@ -41,7 +41,7 @@ class TestSubOfRealCommand < MiniTest::Unit::TestCase
       rescue SystemExit
       end
     end
-    assert_match(out, /^.*Usage.*\n\n\t.*parent\tSubcommands: child.*$/)
+    assert_match(out, /^.*Usage.*\n\n\tparent\tSubcommands:\t child.*$/)
   end
 
   def test_output_parent

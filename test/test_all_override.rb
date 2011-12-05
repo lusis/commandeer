@@ -33,7 +33,7 @@ class TestOverrideAll < MiniTest::Unit::TestCase
       rescue SystemExit
       end
     end
-    assert_match(out, /^.*Usage.*\n\n\t.*override\tSubcommands: random.*$/)
+    assert_match(out, /^.*Usage.*\n\n\t.*override\tSubcommands:\t random.*$/)
   end
 
   def test_output_override

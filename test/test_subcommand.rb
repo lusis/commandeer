@@ -33,7 +33,7 @@ class TestSubCommand < MiniTest::Unit::TestCase
       rescue SystemExit
       end
     end
-    assert_match(out, /^.*Usage.*\n\n\t.*fakeparent\tSubcommands: bar.*$/)
+    assert_match(out, /^.*Usage.*\n\n\tfakeparent\tSubcommands:\t bar.*$/)
   end
 
   def test_output_fakeparent
