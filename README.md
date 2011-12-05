@@ -93,7 +93,99 @@ I am overriding all the things:
 for-great-justice
 ```
 
-You can look at the contents of `test/helpers` to see various invocations.
+### Mixing command options and subcommands
+You can even add a subcommand to a top-level command that has its own parser (but you'll get a nasty warning about it).
+
+```ruby
+require 'commandeer'
+require 'optparse'
+
+class Parent
+  include Commandeer
+
+  command "parent"
+
+  def self.parse(args)
+    options = {}
+    opts = OptionParser.new do |opts|
+      opts.banner = "parent [options]"
+
+      opts.on("-p", "--parent PARENTTHING", "The option for parent") do |f|
+        options[:f] = f
+      end
+      opts.on_tail("-h", "--help", "parent help") do
+        puts opts
+        exit(1)
+      end
+    end
+    begin
+      opts.parse!(args)
+    rescue OptionParser::InvalidOption => e
+      puts e
+      puts opts
+    end
+  end
+end
+
+class Child
+  include Commandeer
+
+  command "child", :parent => 'parent'
+
+  def self.parse(args)
+    options = {}
+    opts = OptionParser.new do |opts|
+      opts.banner = "child [options]"
+
+      opts.on("-c", "--child CHILDTHING", "The option for child") do |f|
+        options[:f] = f
+      end
+      opts.on_tail("-h", "--help", "child help") do
+        puts opts
+        exit(1)
+      end
+    end
+    begin
+      opts.parse!(args)
+    rescue OptionParser::InvalidOption => e
+      puts e
+      puts opts
+    end
+  end
+end
+
+Commandeer.parse!(ARGV,__FILE__)
+```
+
+Output:
+
+```
+$ ./test-app.rb 
+Usage: ./test-app.rb [command options] or [command subcommand options]
+
+	parent	Subcommands: child
+
+$ ./test-app.rb parent
+`parent` has the following registered subcommands:
+	child
+
+$ ./test-app.rb parent --help
+parent [options]
+    -p, --parent PARENTTHING         The option for parent
+    -h, --help                       parent help
+exit
+
+$ ./test-app.rb parent child
+        Warning! `child` is a registered subcommand for `parent` but `parent` also takes options.
+        This can cause unexpected results if `parent` has an option named `child`
+
+$ ./test-app.rb parent child --help
+        Warning! `child` is a registered subcommand for `parent` but `parent` also takes options.
+        This can cause unexpected results if `parent` has an option named `child`
+child [options]
+    -c, --child CHILDTHING           The option for child
+    -h, --help                       child help
+```
 
 # Contributing
 
