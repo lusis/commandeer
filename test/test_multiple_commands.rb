@@ -14,13 +14,11 @@ class TestMultipleCommands < MiniTest::Unit::TestCase
 
   # To ensure top-level commands are new-lined
   def test_format_output
-    out, err = capture_io do
+    assert_output("Usage: test_multiple_commands [command options] or [command subcommand options]\n\n\tcommand_two\t\n\tcommand_one\t\n") do
       begin
         Commandeer.parse!('', 'test_multiple_commands')
       rescue SystemExit
       end
     end
-
-    assert_match(out, /^.*\n\n\tcommand_one\t\n\tcommand_two\t\n.*$/)
   end
 end
