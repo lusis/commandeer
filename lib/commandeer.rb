@@ -32,7 +32,6 @@ module Commandeer
 
   def self.parse!(args, script_name=__FILE__)
     @script_name = script_name
-    @commands.sort
     # We haz no commands registered
     if @commands.size == 0
       puts "No known commands!"
@@ -43,9 +42,10 @@ module Commandeer
     if (args.size == 0) || (args[0] =~ /^-/)
       output = ''
       output << "Usage: #{@script_name} [command options] or [command subcommand options]\n\n"
-      @commands.each do |command, options|
-        next if (command==:klass || command==:parser)
-        output << "\t#{command}"
+      @commands.keys.sort.each do |c|
+        options = @commands[c]
+        next if (c==:klass || c==:parser)
+        output << "\t#{c}"
         unless options["subcommands"].nil?
           output << "\tSubcommands:"
           options["subcommands"].each do |sub, opts|
